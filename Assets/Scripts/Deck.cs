@@ -4,13 +4,21 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Deck : MonoBehaviour
 {
+    public static Deck Instance { get; private set; }
+
     [SerializeField] private TextMeshProUGUI countCard;
     [SerializeField] private List<PackObjectSO> packObjectSOList;
 
     private List<CardObjectSO> cardsList = new List<CardObjectSO>();
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     private void Start()
     {
@@ -46,5 +54,16 @@ public class Deck : MonoBehaviour
             cardsList[k] = cardsList[n];
             cardsList[n] = value;
         }
+    }
+
+    public CardObjectSO DrawCard()
+    {
+        CardObjectSO drawnCard = cardsList[0];
+
+        cardsList.Remove(drawnCard);
+
+        Debug.Log(drawnCard);
+
+        return drawnCard;
     }
 }
