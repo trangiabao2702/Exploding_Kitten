@@ -6,14 +6,15 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Deck : MonoBehaviour
+public class Deck : MonoBehaviour, ICardObjectParent
 {
     public static Deck Instance { get; private set; }
 
+    [SerializeField] private Transform undrawnCards;
     [SerializeField] private TextMeshProUGUI countCard;
     [SerializeField] private List<PackObjectSO> packObjectSOList;
 
-    private List<CardObjectSO> cardsList = new List<CardObjectSO>();
+    private List<CardObject> cardsList = new List<CardObject>();
 
     private void Awake()
     {
@@ -26,7 +27,8 @@ public class Deck : MonoBehaviour
         {
             foreach (CardObjectSO cardObjectSO in packObjectSO.cardObjectSOList)
             {
-                cardsList.Add(cardObjectSO);
+                CardObject cardObject = CardObject.SpawnCardObject(cardObjectSO, this);
+                cardsList.Add(cardObject);
             }
         }
 
@@ -50,20 +52,40 @@ public class Deck : MonoBehaviour
             while (!(box[0] < n * (Byte.MaxValue / n)));
             int k = (box[0] % n);
             n--;
-            CardObjectSO value = cardsList[k];
+            CardObject value = cardsList[k];
             cardsList[k] = cardsList[n];
             cardsList[n] = value;
         }
     }
 
-    public CardObjectSO DrawCard()
+    public CardObject DrawCard()
     {
-        CardObjectSO drawnCard = cardsList[0];
+        CardObject drawnCard = cardsList[0];
 
         cardsList.Remove(drawnCard);
 
-        Debug.Log(drawnCard);
-
         return drawnCard;
+    }
+
+    public Transform GetCardObjectFollowTransform()
+    {
+        return undrawnCards;
+    }
+
+    public List<CardObject> GetCardObjectList()
+    {
+        return cardsList;
+    }
+
+    public void AddCardObject(CardObject cardObject)
+    {
+        // Add to the top of Deck
+        cardsList.Insert(0, cardObject);
+    }
+
+    public void RemoveCardObject(CardObject cardObject)
+    {
+        // To remove exactly a card
+        cardsList.Remove(cardObject);
     }
 }

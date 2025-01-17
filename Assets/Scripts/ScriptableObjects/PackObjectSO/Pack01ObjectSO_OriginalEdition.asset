@@ -15,3 +15,5 @@ MonoBehaviour:
   cardObjectSOList:
   - {fileID: 11400000, guid: 15c88de14fcd53a4ba24b6e0734b2a04, type: 2}
   - {fileID: 11400000, guid: e7cd78a8d985d7048a44d0e74207418b, type: 2}
+  packCover: {fileID: 0}
+  packName: Original Edition

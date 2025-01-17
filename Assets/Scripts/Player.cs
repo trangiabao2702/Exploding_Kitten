@@ -1,17 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, ICardObjectParent
 {
     public static Player Instance { get; private set; }
 
     [SerializeField] private Button drawButton;
-    [SerializeField] private TextMeshProUGUI countCards;
+    [SerializeField] private Transform cardsOnHandTransform;
 
-    private List<CardObjectSO> cardsOnHand = new List<CardObjectSO>();
+    private List<CardObject> cardsOnHand = new List<CardObject>();
 
     private void Awake()
     {
@@ -19,16 +20,34 @@ public class Player : MonoBehaviour
 
         drawButton.onClick.AddListener(() =>
         {
-            cardsOnHand.Add(Deck.Instance.DrawCard());
+            CardObject newCardObject = Deck.Instance.DrawCard();
+
+            newCardObject.SetCardObjectParent(this);
         });
     }
 
     private void Update()
     {
-        countCards.text = cardsOnHand.Count.ToString();
-        foreach (CardObjectSO card in cardsOnHand)
-        {
-            Debug.Log(card);
-        }
+
+    }
+
+    public Transform GetCardObjectFollowTransform()
+    {
+        return cardsOnHandTransform;
+    }
+
+    public List<CardObject> GetCardObjectList()
+    {
+        return cardsOnHand;
+    }
+
+    public void AddCardObject(CardObject cardObject)
+    {
+        cardsOnHand.Add(cardObject);
+    }
+
+    public void RemoveCardObject(CardObject cardObject)
+    {
+        cardsOnHand.Remove(cardObject);
     }
 }
