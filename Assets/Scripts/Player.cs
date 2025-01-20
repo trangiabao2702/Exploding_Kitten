@@ -9,8 +9,9 @@ public class Player : MonoBehaviour, ICardObjectParent
 {
     public static Player Instance { get; private set; }
 
-    [SerializeField] private Button drawButton;
     [SerializeField] private Transform cardsOnHandTransform;
+    [SerializeField] private Button drawButton;
+    [SerializeField] private Button playButton;
 
     private List<CardObject> cardsOnHand = new List<CardObject>();
 
@@ -23,6 +24,10 @@ public class Player : MonoBehaviour, ICardObjectParent
             CardObject newCardObject = Deck.Instance.DrawCard();
 
             newCardObject.SetCardObjectParent(this);
+        });
+        playButton.onClick.AddListener(() =>
+        {
+            
         });
     }
 
@@ -49,5 +54,10 @@ public class Player : MonoBehaviour, ICardObjectParent
     public void RemoveCardObject(CardObject cardObject)
     {
         cardsOnHand.Remove(cardObject);
+    }
+
+    public bool HasCardOnHand(CardObject cardObject)
+    {
+        return cardsOnHand.Contains(cardObject);
     }
 }
