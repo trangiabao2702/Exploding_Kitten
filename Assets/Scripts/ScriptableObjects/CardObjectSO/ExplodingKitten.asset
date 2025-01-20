@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27aeb478c83d71745ade4febc3bae959, type: 3}
   m_Name: ExplodingKitten
   m_EditorClassIdentifier: 
-  prefab: {fileID: 3606443613337905820, guid: 4dc97a6368df9f849bb56de950b54df1, type: 3}
+  prefab: {fileID: 2456160536530310268, guid: 20113c9a9fa42014b8ff3b1c6cfe9e97, type: 3}
   sprite: {fileID: 21300000, guid: 1456917489172d7438d00c512628feeb, type: 3}
   cardName: Exploding Kitten

@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27aeb478c83d71745ade4febc3bae959, type: 3}
   m_Name: Defuse
   m_EditorClassIdentifier: 
-  prefab: {fileID: 8539222215365815831, guid: 1422c214caa460e4983b72d44f99f06f, type: 3}
+  prefab: {fileID: 2456160536530310268, guid: 40258b8631967a745ba498ceaa2d8c00, type: 3}
   sprite: {fileID: 21300000, guid: aa2ddb714e51b064a8253e715cfec32c, type: 3}
   cardName: Defuse

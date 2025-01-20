@@ -14,7 +14,7 @@ public class Deck : MonoBehaviour, ICardObjectParent
     [SerializeField] private TextMeshProUGUI countCard;
     [SerializeField] private List<PackObjectSO> packObjectSOList;
 
-    private List<CardObject> cardsList = new List<CardObject>();
+    private List<CardObject> cardsList;
 
     private void Awake()
     {
@@ -23,12 +23,13 @@ public class Deck : MonoBehaviour, ICardObjectParent
 
     private void Start()
     {
+        cardsList = new List<CardObject>();
+
         foreach (PackObjectSO packObjectSO in packObjectSOList)
         {
             foreach (CardObjectSO cardObjectSO in packObjectSO.cardObjectSOList)
             {
-                CardObject cardObject = CardObject.SpawnCardObject(cardObjectSO, this);
-                cardsList.Add(cardObject);
+                CardObject.SpawnCardObject(cardObjectSO, this);
             }
         }
 
