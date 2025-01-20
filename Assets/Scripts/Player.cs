@@ -27,7 +27,12 @@ public class Player : MonoBehaviour, ICardObjectParent
         });
         playButton.onClick.AddListener(() =>
         {
-            
+            List<CardObject> selectedCards = GetSelectedCards();
+
+            if (CanPlayCards(selectedCards))
+            {
+                PlayCards(selectedCards);
+            }
         });
     }
 
@@ -59,5 +64,90 @@ public class Player : MonoBehaviour, ICardObjectParent
     public bool HasCardOnHand(CardObject cardObject)
     {
         return cardsOnHand.Contains(cardObject);
+    }
+
+    public List<CardObject> GetSelectedCards()
+    {
+        List<CardObject> selectedCards = new List<CardObject>();
+
+        foreach (CardObject cardObject in cardsOnHand)
+        {
+            if (cardObject.IsSelected())
+            {
+                selectedCards.Add(cardObject);
+            }
+        }
+
+        return selectedCards;
+    }
+
+    public bool CanPlayCards(List<CardObject> selectedCards)
+    {
+        switch (selectedCards.Count)
+        {
+            case 1:
+                // Play only 1 card
+                return true;
+            case 2:
+                // Play 2 same type cards
+                if (selectedCards[0].GetCardType() == selectedCards[1].GetCardType())
+                {
+                    return true;
+                }
+                return false;
+            case 3:
+                // Play 3 same type cards
+                if (selectedCards[0].GetCardType() == selectedCards[1].GetCardType() &&
+                    selectedCards[1].GetCardType() == selectedCards[2].GetCardType())
+                {
+                    return true;
+                }
+                return false;
+            case 5:
+                // Play 5 different type cards
+                for (int i = 0; i < selectedCards.Count - 1; i++)
+                {
+                    for (int j = i + 1; j < selectedCards.Count; j++)
+                    {
+                        if (selectedCards[i].GetCardType() == selectedCards[j].GetCardType())
+                        {
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    public void PlayCards(List<CardObject> selectedCards)
+    {
+        // Place cards into Played Deck
+        foreach (CardObject selectedCard in selectedCards)
+        {
+            selectedCard.SetCardObjectParent(PlayedDeck.Instance);
+
+            RemoveCardObject(selectedCard);
+        }
+
+        // Use cards' feature
+        switch (selectedCards.Count)
+        {
+            case 1:
+                // Use Card's feature
+                break;
+            case 2:
+                // Select a player to get a random card from his hand
+                break;
+            case 3:
+                // Select a player to get a card with exactly name from his hand
+                break;
+            case 5:
+                // Get a card from played deck
+                break;
+            default:
+                break;
+        }
     }
 }

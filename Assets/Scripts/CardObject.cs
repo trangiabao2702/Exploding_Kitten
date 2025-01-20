@@ -6,7 +6,21 @@ using UnityEngine.UI;
 
 public class CardObject : MonoBehaviour, IPointerClickHandler
 {
+    public enum CardType
+    {
+        Attack,
+        Cat,
+        Defuse,
+        ExplodingKitten,
+        Favor,
+        Nope,
+        SeeTheFuture,
+        Shuffle,
+        Skip,
+    }
+
     [SerializeField] private CardObjectSO cardObjectSO;
+    [SerializeField] private CardType cardType;
 
     private ICardObjectParent cardObjectParent;
     private bool isSelected = false;
@@ -24,7 +38,9 @@ public class CardObject : MonoBehaviour, IPointerClickHandler
 
         cardObjectParent.AddCardObject(this);
 
-        this.transform.SetParent(cardObjectParent.GetCardObjectFollowTransform());
+        Transform cardObjectParentFollowTransform = cardObjectParent.GetCardObjectFollowTransform();
+        this.transform.SetParent(cardObjectParentFollowTransform);
+        this.transform.position = cardObjectParentFollowTransform.position;
     }
 
     public static CardObject SpawnCardObject(CardObjectSO cardObjectSO, ICardObjectParent cardObjectParent)
@@ -67,5 +83,10 @@ public class CardObject : MonoBehaviour, IPointerClickHandler
     public bool IsSelected()
     {
         return isSelected;
+    }
+
+    public CardType GetCardType()
+    {
+        return cardType;
     }
 }
