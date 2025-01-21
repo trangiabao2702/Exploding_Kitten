@@ -15,6 +15,11 @@ public class PlayedDeck : MonoBehaviour, ICardObjectParent
     private void Awake()
     {
         Instance = this;
+
+        showButton.onClick.AddListener(() =>
+        {
+            PlayedCardsUI.Instance.Show(playedCards);
+        });
     }
 
     private void Start()
