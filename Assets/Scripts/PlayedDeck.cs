@@ -64,6 +64,9 @@ public class PlayedDeck : MonoBehaviour, ICardObjectParent
     public void AddCardObject(CardObject cardObject)
     {
         playedCards.Add(cardObject);
+        
+        cardObject.transform.rotation = Quaternion.Euler(0, 0, Random.Range(-15f, 15f));
+
         UpdateVisual();
     }
 
