@@ -97,6 +97,9 @@ public class CardObject : MonoBehaviour, IPointerClickHandler
             case CardType.SeeTheFuture:
                 SeeTheFuture();
                 break;
+            case CardType.Shuffle:
+                Shuffle();
+                break;
             default:
                 break;
         }
@@ -108,5 +111,10 @@ public class CardObject : MonoBehaviour, IPointerClickHandler
         List<CardObject> cardsInDeck = Deck.Instance.GetCardObjectList();
         int numberToShow = Mathf.Min(numberOfCards, cardsInDeck.Count);
         CardsListUI.Instance.Show(cardsInDeck.GetRange(0, numberToShow));
+    }
+
+    private void Shuffle()
+    {
+        Deck.Instance.ShuffleDeck();
     }
 }
