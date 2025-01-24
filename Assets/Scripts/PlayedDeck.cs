@@ -18,7 +18,7 @@ public class PlayedDeck : MonoBehaviour, ICardObjectParent
 
         showButton.onClick.AddListener(() =>
         {
-            PlayedCardsUI.Instance.Show(playedCards);
+            CardsListUI.Instance.Show(playedCards);
         });
     }
 

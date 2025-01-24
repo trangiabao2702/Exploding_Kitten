@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayedCardsUI : MonoBehaviour
+public class CardsListUI : MonoBehaviour
 {
-    public static PlayedCardsUI Instance { get; private set; }
+    public static CardsListUI Instance { get; private set; }
 
     [SerializeField] private Button closeButton;
     [SerializeField] private Transform playedCardsTransform;
@@ -33,7 +33,6 @@ public class PlayedCardsUI : MonoBehaviour
         {
             Destroy(playedCard.gameObject);
         }
-
     }
 
     public void Show(List<CardObject> playedCards)

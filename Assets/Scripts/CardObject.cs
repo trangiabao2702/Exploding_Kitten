@@ -89,4 +89,24 @@ public class CardObject : MonoBehaviour, IPointerClickHandler
     {
         return cardType;
     }
+
+    public void PlayCard()
+    {
+        switch (cardType)
+        {
+            case CardType.SeeTheFuture:
+                SeeTheFuture();
+                break;
+            default:
+                break;
+        }
+    }
+
+    // ------ Pack 1: Original Edition ------
+    private void SeeTheFuture(int numberOfCards = 3)
+    {
+        List<CardObject> cardsInDeck = Deck.Instance.GetCardObjectList();
+        int numberToShow = Mathf.Min(numberOfCards, cardsInDeck.Count);
+        CardsListUI.Instance.Show(cardsInDeck.GetRange(0, numberToShow));
+    }
 }

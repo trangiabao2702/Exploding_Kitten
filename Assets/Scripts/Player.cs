@@ -142,6 +142,7 @@ public class Player : MonoBehaviour, ICardObjectParent
         {
             case 1:
                 // Use Card's feature
+                selectedCards[0].PlayCard();
                 break;
             case 2:
                 // Select a player to get a random card from his hand

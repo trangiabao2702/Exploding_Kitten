@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 166896782}
   - component: {fileID: 166896783}
   m_Layer: 5
-  m_Name: PlayedCardsUI
+  m_Name: CardsListUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -149,7 +149,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 166896779}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -157,11 +157,11 @@ RectTransform:
   - {fileID: 209293964}
   - {fileID: 1621492815}
   - {fileID: 1036454199}
-  m_Father: {fileID: 815652042}
+  m_Father: {fileID: 1783019104}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1.2, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 16, y: 9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &166896781
@@ -886,7 +886,6 @@ RectTransform:
   m_Children:
   - {fileID: 1574651036}
   - {fileID: 1960016132}
-  - {fileID: 166896780}
   m_Father: {fileID: 1783019104}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -1222,7 +1221,7 @@ GameObject:
   - component: {fileID: 1036454199}
   - component: {fileID: 1036454200}
   m_Layer: 5
-  m_Name: PlayedCards
+  m_Name: CardsList
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2249,6 +2248,7 @@ RectTransform:
   - {fileID: 2035091098}
   - {fileID: 2020359669}
   - {fileID: 815652042}
+  - {fileID: 166896780}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
