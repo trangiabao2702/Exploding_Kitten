@@ -50,6 +50,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardObjectSO: {fileID: 11400000, guid: e7cd78a8d985d7048a44d0e74207418b, type: 2}
+  cardType: 3
 --- !u!1 &6459536392302460181
 GameObject:
   m_ObjectHideFlags: 0

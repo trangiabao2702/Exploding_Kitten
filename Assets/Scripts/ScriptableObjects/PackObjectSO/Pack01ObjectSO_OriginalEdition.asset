@@ -15,5 +15,11 @@ MonoBehaviour:
   cardObjectSOList:
   - {fileID: 11400000, guid: 15c88de14fcd53a4ba24b6e0734b2a04, type: 2}
   - {fileID: 11400000, guid: e7cd78a8d985d7048a44d0e74207418b, type: 2}
+  - {fileID: 11400000, guid: 6d84c3fa2fa47314195dbb5732998eb0, type: 2}
+  - {fileID: 11400000, guid: b6fc8b25b0d15c442a091766f4a7366e, type: 2}
+  - {fileID: 11400000, guid: 2f58c05e56015364ca73bd38bb1640b2, type: 2}
+  - {fileID: 11400000, guid: 567f46c9e8450674a9b445dda7315569, type: 2}
+  - {fileID: 11400000, guid: c6601e95b4085474c979df3411d5944a, type: 2}
+  - {fileID: 11400000, guid: 26c3c7a672e1ca14aa2144157c62c588, type: 2}
   packCover: {fileID: 0}
   packName: Original Edition

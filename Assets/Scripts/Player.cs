@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -12,6 +13,7 @@ public class Player : MonoBehaviour, ICardObjectParent
     [SerializeField] private Transform cardsOnHandTransform;
     [SerializeField] private Button drawButton;
     [SerializeField] private Button playButton;
+    [SerializeField] private Button arrangeButton;
 
     private List<CardObject> cardsOnHand = new List<CardObject>();
 
@@ -33,6 +35,10 @@ public class Player : MonoBehaviour, ICardObjectParent
             {
                 PlayCards(selectedCards);
             }
+        });
+        arrangeButton.onClick.AddListener(() =>
+        {
+            ArrangeCardsOnHand();
         });
     }
 
@@ -148,6 +154,20 @@ public class Player : MonoBehaviour, ICardObjectParent
                 break;
             default:
                 break;
+        }
+    }
+
+    private void ArrangeCardsOnHand()
+    {
+        for (int i = 0; i < cardsOnHandTransform.childCount - 1; i++)
+        {
+            for (int j = i + 1; j < cardsOnHandTransform.childCount; j++)
+            {
+                if (String.Compare(cardsOnHandTransform.GetChild(i).name, cardsOnHandTransform.GetChild(j).name) > 0)
+                {
+                    cardsOnHandTransform.GetChild(j).SetSiblingIndex(cardsOnHandTransform.GetChild(i).GetSiblingIndex());
+                }
+            }
         }
     }
 }
