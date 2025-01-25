@@ -21,6 +21,7 @@ public class CardObject : MonoBehaviour, IPointerClickHandler
 
     [SerializeField] private CardObjectSO cardObjectSO;
     [SerializeField] private CardType cardType;
+    [SerializeField] private Transform selected;
 
     private ICardObjectParent cardObjectParent;
     private bool isSelected = false;
@@ -66,6 +67,9 @@ public class CardObject : MonoBehaviour, IPointerClickHandler
                 MoveUp();
             }
         }
+
+        bool canSetCardSelected = selected.gameObject.activeSelf ? CardsListUI.Instance.UnlockSelectCard() == 0 : CardsListUI.Instance.LockSelectCard() > 0;
+        AdjustCardSelected(canSetCardSelected);
     }
 
     private void MoveUp()
@@ -88,6 +92,12 @@ public class CardObject : MonoBehaviour, IPointerClickHandler
     public CardType GetCardType()
     {
         return cardType;
+    }
+
+    public void AdjustCardSelected(bool canSetCardSelected)
+    {
+        selected.gameObject.SetActive(canSetCardSelected);
+        CardsListUI.Instance.AdjustSelectCardObjects(this, canSetCardSelected);
     }
 
     public void PlayCard()

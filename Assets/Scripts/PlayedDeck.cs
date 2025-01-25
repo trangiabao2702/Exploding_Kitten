@@ -72,7 +72,14 @@ public class PlayedDeck : MonoBehaviour, ICardObjectParent
 
     public void RemoveCardObject(CardObject cardObject)
     {
-        playedCards.Remove(cardObject);
-        UpdateVisual();
+        foreach (CardObject playedCard in playedCards)
+        {
+            if (playedCard.GetCardObjectSO().name == cardObject.GetCardObjectSO().name)
+            {
+                playedCards.Remove(playedCard);
+                UpdateVisual();
+                break;
+            }
+        }
     }
 }

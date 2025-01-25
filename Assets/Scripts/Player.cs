@@ -111,6 +111,11 @@ public class Player : MonoBehaviour, ICardObjectParent
                 return false;
             case 5:
                 // Play 5 different type cards
+                if (PlayedDeck.Instance.GetCardObjectList().Count == 0)
+                {
+                    return false;
+                }
+
                 for (int i = 0; i < selectedCards.Count - 1; i++)
                 {
                     for (int j = i + 1; j < selectedCards.Count; j++)
@@ -129,14 +134,6 @@ public class Player : MonoBehaviour, ICardObjectParent
 
     public void PlayCards(List<CardObject> selectedCards)
     {
-        // Place cards into Played Deck
-        foreach (CardObject selectedCard in selectedCards)
-        {
-            selectedCard.SetCardObjectParent(PlayedDeck.Instance);
-
-            RemoveCardObject(selectedCard);
-        }
-
         // Use cards' feature
         switch (selectedCards.Count)
         {
@@ -152,9 +149,19 @@ public class Player : MonoBehaviour, ICardObjectParent
                 break;
             case 5:
                 // Get a card from played deck
+                CardsListUI.Instance.UnlockSelectCard();
+                CardsListUI.Instance.Show(PlayedDeck.Instance.GetCardObjectList());
                 break;
             default:
                 break;
+        }
+
+        // Place cards into Played Deck
+        foreach (CardObject selectedCard in selectedCards)
+        {
+            selectedCard.SetCardObjectParent(PlayedDeck.Instance);
+
+            RemoveCardObject(selectedCard);
         }
     }
 
