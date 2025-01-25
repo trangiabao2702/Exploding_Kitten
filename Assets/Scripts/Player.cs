@@ -23,6 +23,13 @@ public class Player : MonoBehaviour, ICardObjectParent
 
         drawButton.onClick.AddListener(() =>
         {
+            // Reset all selected cards
+            foreach (CardObject cardObject in cardsOnHand)
+            {
+                cardObject.SetCardSelected(false);
+            }
+
+            // Add new card to hand
             CardObject newCardObject = Deck.Instance.DrawCard();
 
             newCardObject.SetCardObjectParent(this);

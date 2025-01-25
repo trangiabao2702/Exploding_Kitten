@@ -89,6 +89,11 @@ public class CardObject : MonoBehaviour, IPointerClickHandler
         return isSelected;
     }
 
+    public void SetCardSelected(bool isSelected)
+    {
+        this.isSelected = isSelected;
+    }
+
     public CardType GetCardType()
     {
         return cardType;
@@ -96,6 +101,7 @@ public class CardObject : MonoBehaviour, IPointerClickHandler
 
     public void AdjustCardSelected(bool canSetCardSelected)
     {
+        // To change selected state in cards list ui
         selected.gameObject.SetActive(canSetCardSelected);
         CardsListUI.Instance.AdjustSelectCardObjects(this, canSetCardSelected);
     }
