@@ -32,6 +32,8 @@ public class Player : MonoBehaviour, ICardObjectParent
             // Add new card to hand
             CardObject newCardObject = Deck.Instance.DrawCard();
 
+            DrawnCardUI.Instance.Show(newCardObject);
+
             newCardObject.SetCardObjectParent(this);
         });
         playButton.onClick.AddListener(() =>
