@@ -16,6 +16,9 @@ public class DrawnCardUI : MonoBehaviour
     [SerializeField] private Button defuseButton;
     [SerializeField] private Button explodeButton;
 
+    private CardObject defuseCardObject;
+    private CardObject explodingKittenCardObject;
+
     private void Awake()
     {
         Instance = this;
@@ -26,11 +29,14 @@ public class DrawnCardUI : MonoBehaviour
         });
         defuseButton.onClick.AddListener(() =>
         {
+            DefuseTheExplodingKitten();
+
             Hide();
         });
         explodeButton.onClick.AddListener(() =>
         {
             Hide();
+            Debug.Log("Game over!");
         });
     }
 
@@ -57,6 +63,18 @@ public class DrawnCardUI : MonoBehaviour
         {
             defuseButton.gameObject.SetActive(true);
             explodeButton.gameObject.SetActive(true);
+
+            defuseCardObject = Player.Instance.GetDefuseCardOnHand();
+            explodingKittenCardObject = cardObject;
+
+            if (defuseCardObject == null)
+            {
+                defuseButton.interactable = false;
+            }
+            else
+            {
+                defuseButton.interactable = true;
+            }
         }
         else
         {
@@ -88,5 +106,14 @@ public class DrawnCardUI : MonoBehaviour
             default:
                 return "None...";
         }
+    }
+
+    private void DefuseTheExplodingKitten()
+    {
+        Player.Instance.RemoveCardObject(defuseCardObject);
+        defuseCardObject.SetCardObjectParent(PlayedDeck.Instance);
+
+        Player.Instance.RemoveCardObject(explodingKittenCardObject);
+        explodingKittenCardObject.SetCardObjectParent(Deck.Instance);
     }
 }

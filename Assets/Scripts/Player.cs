@@ -187,4 +187,17 @@ public class Player : MonoBehaviour, ICardObjectParent
             }
         }
     }
+
+    public CardObject GetDefuseCardOnHand()
+    {
+        foreach (CardObject cardObject in cardsOnHand)
+        {
+            if (cardObject.GetCardType() == CardObject.CardType.Defuse)
+            {
+                return cardObject;
+            }
+        }
+
+        return null;
+    }
 }
