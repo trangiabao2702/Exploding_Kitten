@@ -23,12 +23,19 @@ public class Deck : MonoBehaviour, ICardObjectParent
 
     private void Start()
     {
+        int numberOfPlayers = GameManager.Instance.GetNumberOfPlayers();
+        int numberOfExplodingKittenCards = numberOfPlayers - 1;
+
         cardsList = new List<CardObject>();
 
         foreach (PackObjectSO packObjectSO in packObjectSOList)
         {
             foreach (CardObjectSO cardObjectSO in packObjectSO.cardObjectSOList)
             {
+                if (cardObjectSO.cardName.Contains("Exploding Kitten") && --numberOfExplodingKittenCards < 0)
+                {
+                    continue;
+                }
                 CardObject.SpawnCardObject(cardObjectSO, this);
             }
         }
