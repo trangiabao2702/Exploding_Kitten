@@ -15,4 +15,14 @@ public class GameManager : MonoBehaviour
     {
         return 2;
     }
+
+    public List<ICardObjectParent> GetPlayers()
+    {
+        List<ICardObjectParent> players = new List<ICardObjectParent>();
+
+        players.Add(Player.Instance);
+        players.Add(OtherPlayer.Instance);
+        
+        return players;
+    }
 }
