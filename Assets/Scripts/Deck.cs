@@ -171,4 +171,12 @@ public class Deck : MonoBehaviour, ICardObjectParent
 
         return cardObject;
     }
+
+    public void PutExplodingKittenIntoDeck(int position)
+    {
+        CardObject explodingKittenCardObject = cardsInDeck[0];
+
+        RemoveCardObject(explodingKittenCardObject);
+        cardsInDeck.Insert(position - 1, explodingKittenCardObject);
+    }
 }

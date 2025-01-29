@@ -32,6 +32,8 @@ public class DrawnCardUI : MonoBehaviour
             DefuseTheExplodingKitten();
 
             Hide();
+
+            PutExplodingKittenBackToDeckUI.Instance.Show();
         });
         explodeButton.onClick.AddListener(() =>
         {
