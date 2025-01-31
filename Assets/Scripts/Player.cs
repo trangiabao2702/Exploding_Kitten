@@ -14,6 +14,7 @@ public class Player : MonoBehaviour, ICardObjectParent
     [SerializeField] private Button drawButton;
     [SerializeField] private Button playButton;
     [SerializeField] private Button arrangeButton;
+    [SerializeField] private Button nopeButton;
 
     private List<CardObject> cardsOnHand = new List<CardObject>();
 
@@ -49,11 +50,15 @@ public class Player : MonoBehaviour, ICardObjectParent
         {
             ArrangeCardsOnHand();
         });
+        nopeButton.onClick.AddListener(() =>
+        {
+            
+        });
     }
 
     private void Update()
     {
-
+        nopeButton.interactable = HasNopeCard();
     }
 
     public Transform GetCardObjectFollowTransform()
@@ -199,5 +204,17 @@ public class Player : MonoBehaviour, ICardObjectParent
         }
 
         return null;
+    }
+
+    private bool HasNopeCard()
+    {
+        foreach (CardObject cardObject in cardsOnHand)
+        {
+            if (cardObject.GetCardType() == CardObject.CardType.Nope)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }
