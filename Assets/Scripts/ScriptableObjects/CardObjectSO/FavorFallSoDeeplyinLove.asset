@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27aeb478c83d71745ade4febc3bae959, type: 3}
   m_Name: FavorFallSoDeeplyinLove
   m_EditorClassIdentifier: 
-  prefab: {fileID: 2456160536530310268, guid: 5be4c31f13fe1914296bc39b1e288a0e, type: 3}
+  prefab: {fileID: 2456160536530310268, guid: de5a53b990ed4f34e94f2088a1943249, type: 3}
   sprite: {fileID: 21300000, guid: e37a80c271f5228469d755d7f3f3d9b6, type: 3}
   cardName: Favor Fall So Deeply in Love

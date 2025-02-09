@@ -118,6 +118,12 @@ public class Deck : MonoBehaviour, ICardObjectParent
 
                     explodingKittenCardsList.Add(cardObject);
                 }
+                else if (cardObject.GetCardType() == CardObject.CardType.Cat) {
+                    for (int i = 0; i < 3; i++)
+                    {
+                        CardObject.SpawnCardObject(cardObjectSO, this);
+                    }
+                }
             }
         }
     }

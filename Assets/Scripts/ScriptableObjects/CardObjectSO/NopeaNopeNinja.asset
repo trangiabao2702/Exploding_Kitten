@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27aeb478c83d71745ade4febc3bae959, type: 3}
   m_Name: NopeaNopeNinja
   m_EditorClassIdentifier: 
-  prefab: {fileID: 2456160536530310268, guid: bbeddcb45f274334ebccf52ac5f95e57, type: 3}
+  prefab: {fileID: 2456160536530310268, guid: 3f3b20f23ef4087498f8c5b9507b2416, type: 3}
   sprite: {fileID: 21300000, guid: c804717d2eaa16b4e8d51f12d2bd4777, type: 3}
   cardName: Nope a Nope Ninja

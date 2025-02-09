@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27aeb478c83d71745ade4febc3bae959, type: 3}
   m_Name: FavorRubPeanutButteronYourBellyButton
   m_EditorClassIdentifier: 
-  prefab: {fileID: 2456160536530310268, guid: 5be4c31f13fe1914296bc39b1e288a0e, type: 3}
+  prefab: {fileID: 2456160536530310268, guid: 53dea0c3a00e6d943a4dba686eaec635, type: 3}
   sprite: {fileID: 21300000, guid: b802076e861ef8f4a879c53cbc365437, type: 3}
   cardName: Favor Rub Peanut Butter on Your Belly Button

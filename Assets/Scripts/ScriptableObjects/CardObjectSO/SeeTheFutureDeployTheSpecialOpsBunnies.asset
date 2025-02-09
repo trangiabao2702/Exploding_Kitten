@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27aeb478c83d71745ade4febc3bae959, type: 3}
   m_Name: SeeTheFutureDeployTheSpecialOpsBunnies
   m_EditorClassIdentifier: 
-  prefab: {fileID: 2456160536530310268, guid: 7b7ecfe318be4174a9c19476d4c41adf, type: 3}
+  prefab: {fileID: 2456160536530310268, guid: a33c44eb168110b4d990c44e939de911, type: 3}
   sprite: {fileID: 21300000, guid: c001d2424c61c834abb3f0d9187af915, type: 3}
   cardName: See the Future Deploy the Special Ops Bunnies

@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27aeb478c83d71745ade4febc3bae959, type: 3}
   m_Name: SeeTheFutureRubTheBellyOfAPigACorn
   m_EditorClassIdentifier: 
-  prefab: {fileID: 2456160536530310268, guid: 7b7ecfe318be4174a9c19476d4c41adf, type: 3}
+  prefab: {fileID: 2456160536530310268, guid: 212da18248754db47ace4faa47a9c998, type: 3}
   sprite: {fileID: 21300000, guid: 3a662dcb99a856442b72b547213c53cd, type: 3}
   cardName: See the Future Rub the Belly of a Pig a Corn

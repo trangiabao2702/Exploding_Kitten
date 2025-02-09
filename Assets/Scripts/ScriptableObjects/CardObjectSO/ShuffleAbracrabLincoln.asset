@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27aeb478c83d71745ade4febc3bae959, type: 3}
   m_Name: ShuffleAbracrabLincoln
   m_EditorClassIdentifier: 
-  prefab: {fileID: 2456160536530310268, guid: 4bf4b2b17cb869f42a23b3f31760e5cd, type: 3}
+  prefab: {fileID: 2456160536530310268, guid: bd6cc3f75102678498e3a58be6ffddb1, type: 3}
   sprite: {fileID: 21300000, guid: eabac15f35ab1474b9c359df85689efe, type: 3}
   cardName: Shuffle Abracrab Lincoln

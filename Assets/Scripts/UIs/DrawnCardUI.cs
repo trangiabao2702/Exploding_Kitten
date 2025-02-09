@@ -105,6 +105,8 @@ public class DrawnCardUI : MonoBehaviour
                 return "Shuffle the draw pile.";
             case CardObject.CardType.Skip:
                 return "End your turn without drawing a card.";
+            case CardObject.CardType.Cat:
+                return "Play two cards to steal a random card from another player.\nPlay three cards to steal exactly a card from another player.\nPlay with 4 other cat cards to take a card from played pile.";
             default:
                 return "None...";
         }
