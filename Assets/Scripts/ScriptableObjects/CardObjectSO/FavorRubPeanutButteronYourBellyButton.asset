@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27aeb478c83d71745ade4febc3bae959, type: 3}
+  m_Name: FavorRubPeanutButteronYourBellyButton
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 2456160536530310268, guid: 5be4c31f13fe1914296bc39b1e288a0e, type: 3}
+  sprite: {fileID: 21300000, guid: b802076e861ef8f4a879c53cbc365437, type: 3}
+  cardName: Favor Rub Peanut Butter on Your Belly Button
