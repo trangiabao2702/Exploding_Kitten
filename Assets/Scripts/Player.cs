@@ -107,18 +107,21 @@ public class Player : MonoBehaviour, ICardObjectParent
         {
             case 1:
                 // Play only 1 card
+                if (selectedCards[0].GetCardType() == CardObject.CardType.Cat)
+                {
+                    return false;
+                }
                 return true;
             case 2:
                 // Play 2 same type cards
-                if (selectedCards[0].GetCardType() == selectedCards[1].GetCardType())
+                if (CanPlayTwoCards(selectedCards[0], selectedCards[1]))
                 {
                     return true;
                 }
                 return false;
             case 3:
                 // Play 3 same type cards
-                if (selectedCards[0].GetCardType() == selectedCards[1].GetCardType() &&
-                    selectedCards[1].GetCardType() == selectedCards[2].GetCardType())
+                if (CanPlayThreeCards(selectedCards[0], selectedCards[1], selectedCards[2]))
                 {
                     return true;
                 }
@@ -136,6 +139,12 @@ public class Player : MonoBehaviour, ICardObjectParent
                     {
                         if (selectedCards[i].GetCardType() == selectedCards[j].GetCardType())
                         {
+                            // 2 cards are Cat type but different cards
+                            if (selectedCards[i].GetCardObjectSO().cardName != selectedCards[j].GetCardObjectSO().cardName)
+                            {
+                                continue;
+                            }
+
                             return false;
                         }
                     }
@@ -144,6 +153,29 @@ public class Player : MonoBehaviour, ICardObjectParent
             default:
                 return false;
         }
+    }
+
+    public bool CanPlayTwoCards(CardObject firstCardObject, CardObject secondCardObject)
+    {
+        if (firstCardObject.GetCardType() != secondCardObject.GetCardType())
+        {
+            return false;
+        }
+
+        if (firstCardObject.GetCardType() == CardObject.CardType.Cat)
+        {
+            if (firstCardObject.GetCardObjectSO().cardName != secondCardObject.GetCardObjectSO().cardName)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public bool CanPlayThreeCards(CardObject firstCardObject, CardObject secondCardObject, CardObject thirdCardObject)
+    {
+        return CanPlayTwoCards(firstCardObject, secondCardObject) && CanPlayTwoCards(firstCardObject, thirdCardObject);
     }
 
     public void PlayCards(List<CardObject> selectedCards)
