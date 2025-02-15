@@ -2,11 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Player : MonoBehaviour, ICardObjectParent
+public class Player : NetworkBehaviour, ICardObjectParent
 {
     public static Player Instance { get; private set; }
 
