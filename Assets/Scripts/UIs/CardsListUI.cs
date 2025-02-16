@@ -31,7 +31,7 @@ public class CardsListUI : MonoBehaviour
                 // Change parent object and remove from cards list
                 foreach (CardObject selectedCardObject in selectedCardObjects.ToList())
                 {
-                    selectedCardObject.SetCardObjectParent(Player.Instance);
+                    selectedCardObject.SetCardObjectParent(Player.LocalInstance);
                     selectedCardObject.AdjustCardSelected(false);
 
                     PlayedDeck.Instance.RemoveCardObject(selectedCardObject);

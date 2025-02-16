@@ -20,8 +20,8 @@ public class GameManager : MonoBehaviour
     {
         List<ICardObjectParent> players = new List<ICardObjectParent>();
 
-        players.Add(Player.Instance);
-        players.Add(OtherPlayer.Instance);
+        players.Add(Player.LocalInstance);
+        players.Add(OtherPlayer.LocalInstance);
         
         return players;
     }

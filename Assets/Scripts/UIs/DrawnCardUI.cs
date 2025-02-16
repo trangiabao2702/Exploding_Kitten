@@ -66,7 +66,7 @@ public class DrawnCardUI : MonoBehaviour
             defuseButton.gameObject.SetActive(true);
             explodeButton.gameObject.SetActive(true);
 
-            defuseCardObject = Player.Instance.GetDefuseCardOnHand();
+            defuseCardObject = Player.LocalInstance.GetDefuseCardOnHand();
             explodingKittenCardObject = cardObject;
 
             if (defuseCardObject == null)
@@ -114,10 +114,10 @@ public class DrawnCardUI : MonoBehaviour
 
     private void DefuseTheExplodingKitten()
     {
-        Player.Instance.RemoveCardObject(defuseCardObject);
+        Player.LocalInstance.RemoveCardObject(defuseCardObject);
         defuseCardObject.SetCardObjectParent(PlayedDeck.Instance);
 
-        Player.Instance.RemoveCardObject(explodingKittenCardObject);
+        Player.LocalInstance.RemoveCardObject(explodingKittenCardObject);
         explodingKittenCardObject.SetCardObjectParent(Deck.Instance);
     }
 }

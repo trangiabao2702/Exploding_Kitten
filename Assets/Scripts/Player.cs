@@ -9,7 +9,8 @@ using UnityEngine.UI;
 
 public class Player : NetworkBehaviour, ICardObjectParent
 {
-    public static Player Instance { get; private set; }
+    //public static Player Instance { get; private set; }
+    public static Player LocalInstance { get; private set; }
 
     [SerializeField] private Transform cardsOnHandTransform;
     [SerializeField] private Button drawButton;
@@ -21,7 +22,7 @@ public class Player : NetworkBehaviour, ICardObjectParent
 
     private void Awake()
     {
-        Instance = this;
+        //Instance = this;
 
         drawButton.onClick.AddListener(() =>
         {
@@ -60,6 +61,31 @@ public class Player : NetworkBehaviour, ICardObjectParent
     private void Update()
     {
         nopeButton.interactable = HasNopeCard();
+    }
+
+    public override void OnNetworkSpawn()
+    {
+        if (IsOwner)
+        {
+            LocalInstance = this;
+            StartCoroutine(ReparentToCanvas());
+        }
+    }
+
+    private IEnumerator ReparentToCanvas()
+    {
+        // Wait until the next frame (or add a custom wait) to ensure the Canvas is spawned.
+        yield return null;
+        GameObject canvasNetworkObject = GameObject.Find("CanvasNetworkObject");
+        if (canvasNetworkObject != null)
+        {
+            // This call will work only if the canvas is a spawned NetworkObject.
+            transform.SetParent(canvasNetworkObject.transform, false);
+        }
+        else
+        {
+            Debug.LogError("No CanvasNetworkObject found in the scene!");
+        }
     }
 
     public Transform GetCardObjectFollowTransform()

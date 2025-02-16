@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using TMPro;
+using Unity.Netcode;
 using UnityEngine;
 
-public class OtherPlayer : MonoBehaviour, ICardObjectParent
+public class OtherPlayer : NetworkBehaviour, ICardObjectParent
 {
-    public static OtherPlayer Instance { get; private set; }
+    //public static OtherPlayer Instance { get; private set; }
+    public static OtherPlayer LocalInstance { get; private set; }
 
     [SerializeField] private Transform cardsOnHandTransform;
     [SerializeField] private TextMeshProUGUI countCardsOnHandText;
@@ -14,12 +17,20 @@ public class OtherPlayer : MonoBehaviour, ICardObjectParent
 
     private void Awake()
     {
-        Instance = this;
+        //Instance = this;
     }
 
     private void Update()
     {
         countCardsOnHandText.text = cardsOnHand.Count.ToString();
+    }
+
+    public override void OnNetworkSpawn()
+    {
+        if (!IsOwner)
+        {
+            LocalInstance = this;
+        }
     }
 
     public Transform GetCardObjectFollowTransform()

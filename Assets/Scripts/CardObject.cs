@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class CardObject : MonoBehaviour, IPointerClickHandler
+public class CardObject : NetworkBehaviour, IPointerClickHandler
 {
     public enum CardType
     {
@@ -56,7 +57,7 @@ public class CardObject : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (Player.Instance.HasCardOnHand(this))
+        if (Player.LocalInstance.HasCardOnHand(this))
         {
             if (isSelected)
             {
@@ -71,6 +72,31 @@ public class CardObject : MonoBehaviour, IPointerClickHandler
         bool canSetCardSelected = selected.gameObject.activeSelf ? CardsListUI.Instance.UnlockSelectCard() == 0 : CardsListUI.Instance.LockSelectCard() > 0;
         AdjustCardSelected(canSetCardSelected);
     }
+
+    //[ServerRpc(RequireOwnership = false)]
+    //void OnPointerClickServerRpc()
+    //{
+    //    OnPointerClickClientRpc();
+    //}
+
+    //[ClientRpc]
+    //void OnPointerClickClientRpc()
+    //{
+    //    if (Player.Instance.HasCardOnHand(this))
+    //    {
+    //        if (isSelected)
+    //        {
+    //            MoveDown();
+    //        }
+    //        else
+    //        {
+    //            MoveUp();
+    //        }
+    //    }
+
+    //    bool canSetCardSelected = selected.gameObject.activeSelf ? CardsListUI.Instance.UnlockSelectCard() == 0 : CardsListUI.Instance.LockSelectCard() > 0;
+    //    AdjustCardSelected(canSetCardSelected);
+    //}
 
     private void MoveUp()
     {

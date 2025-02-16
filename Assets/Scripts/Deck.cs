@@ -3,11 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using TMPro;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
-public class Deck : MonoBehaviour, ICardObjectParent
+public class Deck : NetworkBehaviour, ICardObjectParent
 {
     public static Deck Instance { get; private set; }
 
@@ -135,8 +135,6 @@ public class Deck : MonoBehaviour, ICardObjectParent
         int numberOfDefuseCards = Mathf.Min(listPlayers.Count, defuseCardsList.Count);
         int numberOfExplodingKittenCards = Mathf.Min(listPlayers.Count - 1, explodingKittenCardsList.Count);
 
-        System.Random random = new System.Random();
-
         for (int i = 0; i < numberOfDefuseCards; i++)
         {
             AddCardObject(GetDefuseOrExplodingKittenCardObject(defuseCardsList));
@@ -150,6 +148,11 @@ public class Deck : MonoBehaviour, ICardObjectParent
 
     private void DealTheCards()
     {
+        if (!IsServer)
+        {
+            return;
+        }
+        
         List<ICardObjectParent> listPlayers = GameManager.Instance.GetPlayers();
 
         foreach (ICardObjectParent player in listPlayers)
