@@ -52,4 +52,9 @@ public class OtherPlayer : NetworkBehaviour, ICardObjectParent
     {
         cardsOnHand.Remove(cardObject);
     }
+
+    public NetworkObject GetNetworkObject()
+    {
+        return NetworkObject;
+    }
 }

@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayedDeck : MonoBehaviour, ICardObjectParent
+public class PlayedDeck : NetworkBehaviour, ICardObjectParent
 {
     public static PlayedDeck Instance { get; private set; }
 
@@ -81,5 +82,10 @@ public class PlayedDeck : MonoBehaviour, ICardObjectParent
                 break;
             }
         }
+    }
+
+    public NetworkObject GetNetworkObject()
+    {
+        return NetworkObject;
     }
 }

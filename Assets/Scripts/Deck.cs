@@ -18,6 +18,7 @@ public class Deck : NetworkBehaviour, ICardObjectParent
     private List<CardObject> cardsInDeck;
     private List<CardObject> defuseCardsList = new List<CardObject>();
     private List<CardObject> explodingKittenCardsList = new List<CardObject>();
+    private CardObject drawnCardObject;
 
     private void Awake()
     {
@@ -26,11 +27,25 @@ public class Deck : NetworkBehaviour, ICardObjectParent
 
     private void Update()
     {
+        if (!IsServer)
+        {
+            return;
+        }
+
         countCard.text = cardsInDeck.Count.ToString();
+    }
+    public override void OnNetworkSpawn()
+    {
+        InitDeck();
     }
 
     public void InitDeck()
     {
+        if (!IsServer)
+        {
+            return;
+        }
+
         // Step 1: Add cards to Deck (except Defuse and Exploding Kitten)
         AddCardsWithoutDefuseOrExplodingKitten();
 
@@ -65,13 +80,29 @@ public class Deck : NetworkBehaviour, ICardObjectParent
         }
     }
 
-    public CardObject DrawCard()
+    public void DrawCard(ICardObjectParent player)
     {
-        CardObject drawnCard = cardsInDeck[0];
+        DrawCardServerRpc(player.GetNetworkObject());
+    }
 
-        cardsInDeck.Remove(drawnCard);
+    [ServerRpc(RequireOwnership = false)]
+    private void DrawCardServerRpc(NetworkObjectReference playerNetworkObjectReference)
+    {
+        DrawCardClientRpc(playerNetworkObjectReference);
+    }
 
-        return drawnCard;
+    [ClientRpc]
+    private void DrawCardClientRpc(NetworkObjectReference playerNetworkObjectReference)
+    {
+        drawnCardObject = cardsInDeck[0];
+
+        cardsInDeck.Remove(drawnCardObject);
+
+        DrawnCardUI.Instance.Show(drawnCardObject);
+
+        playerNetworkObjectReference.TryGet(out NetworkObject playerNetworkObject);
+        ICardObjectParent player = playerNetworkObject.GetComponent<ICardObjectParent>();
+        drawnCardObject.SetCardObjectParent(player);
     }
 
     public Transform GetCardObjectFollowTransform()
@@ -94,6 +125,11 @@ public class Deck : NetworkBehaviour, ICardObjectParent
     {
         // To remove exactly a card
         cardsInDeck.Remove(cardObject);
+    }
+
+    public NetworkObject GetNetworkObject()
+    {
+        return NetworkObject;
     }
 
     private void AddCardsWithoutDefuseOrExplodingKitten()
@@ -163,8 +199,7 @@ public class Deck : NetworkBehaviour, ICardObjectParent
             // Each player will have 4 other cards from the Deck
             for (int i = 0; i < 4; i++)
             {
-                CardObject cardObject = DrawCard();
-                cardObject.SetCardObjectParent(player);
+                DrawCard(player);
             }
         }
     }

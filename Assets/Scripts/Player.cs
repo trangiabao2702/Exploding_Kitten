@@ -32,12 +32,8 @@ public class Player : NetworkBehaviour, ICardObjectParent
                 cardObject.SetCardSelected(false);
             }
 
-            // Add new card to hand
-            CardObject newCardObject = Deck.Instance.DrawCard();
-
-            DrawnCardUI.Instance.Show(newCardObject);
-
-            newCardObject.SetCardObjectParent(this);
+            // Add drawn card to hand
+            Deck.Instance.DrawCard(this);
         });
         playButton.onClick.AddListener(() =>
         {
@@ -106,6 +102,11 @@ public class Player : NetworkBehaviour, ICardObjectParent
     public void RemoveCardObject(CardObject cardObject)
     {
         cardsOnHand.Remove(cardObject);
+    }
+
+    public NetworkObject GetNetworkObject()
+    {
+        return NetworkObject;
     }
 
     public bool HasCardOnHand(CardObject cardObject)
