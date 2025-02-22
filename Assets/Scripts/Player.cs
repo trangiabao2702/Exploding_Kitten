@@ -196,7 +196,7 @@ public class Player : MonoBehaviour, ICardObjectParent
             case 5:
                 // Get a card from played deck
                 CardsListUI.Instance.UnlockSelectCard();
-                CardsListUI.Instance.Show(PlayedDeck.Instance.GetCardObjectList());
+                CardsListUI.Instance.Show(PlayedDeck.Instance.GetCardObjectListWithoutExplodingKittens());
                 break;
             default:
                 break;

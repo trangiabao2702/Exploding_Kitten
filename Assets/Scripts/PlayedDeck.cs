@@ -82,4 +82,18 @@ public class PlayedDeck : MonoBehaviour, ICardObjectParent
             }
         }
     }
+
+    public List<CardObject> GetCardObjectListWithoutExplodingKittens()
+    {
+        List<CardObject> availableCards = new List<CardObject>();
+        foreach (CardObject playedCard in playedCards)
+        {
+            if (playedCard.GetCardType() != CardObject.CardType.ExplodingKitten)
+            {
+                availableCards.Add(playedCard);
+            }
+        }
+
+        return availableCards;
+    }
 }
