@@ -65,6 +65,7 @@ public class DrawnCardUI : MonoBehaviour
         {
             defuseButton.gameObject.SetActive(true);
             explodeButton.gameObject.SetActive(true);
+            closeButton.gameObject.SetActive(false);
 
             defuseCardObject = Player.Instance.GetDefuseCardOnHand();
             explodingKittenCardObject = cardObject;
@@ -82,6 +83,7 @@ public class DrawnCardUI : MonoBehaviour
         {
             defuseButton.gameObject.SetActive(false);
             explodeButton.gameObject.SetActive(false);
+            closeButton.gameObject.SetActive(true);
         }
     }
 
