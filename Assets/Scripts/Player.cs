@@ -107,7 +107,9 @@ public class Player : MonoBehaviour, ICardObjectParent
         {
             case 1:
                 // Play only 1 card
-                if (selectedCards[0].GetCardType() == CardObject.CardType.Cat)
+                if (selectedCards[0].GetCardType() == CardObject.CardType.Cat ||
+                    selectedCards[0].GetCardType() == CardObject.CardType.Defuse ||
+                    selectedCards[0].GetCardType() == CardObject.CardType.Nope)
                 {
                     return false;
                 }
