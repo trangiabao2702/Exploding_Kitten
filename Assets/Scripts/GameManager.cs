@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,9 +7,70 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
+    public event EventHandler OnStateChanged;
+
+    private enum State
+    {
+        DealingTheCards,
+        PlayerPlayTurn,
+        PlayerEndTurn,
+        GameOver,
+    }
+
+    private const float playerPlayTurnTimerMax = 45f;
+    private const float playerEndTurnTimerMax = 15f;
+    private State state;
+    private float playerPlayTurnTimer;
+    private float playerEndTurnTimer;
+
     private void Awake()
     {
         Instance = this;
+
+        state = State.DealingTheCards;
+    }
+
+    private void Update()
+    {
+        switch (state)
+        {
+            case State.DealingTheCards:
+                Deck.Instance.InitDeck();
+
+                state = State.PlayerPlayTurn;
+                OnStateChanged?.Invoke(this, EventArgs.Empty);
+
+                playerPlayTurnTimer = playerPlayTurnTimerMax;
+                break;
+            case State.PlayerPlayTurn:
+                playerPlayTurnTimer -= Time.deltaTime;
+                if (playerPlayTurnTimer < 0f)
+                {
+                    state = State.PlayerEndTurn;
+                    OnStateChanged?.Invoke(this, EventArgs.Empty);
+
+                    playerEndTurnTimer = playerEndTurnTimerMax;
+                }
+
+                break;
+            case State.PlayerEndTurn:
+                playerEndTurnTimer -= Time.deltaTime;
+                if (playerEndTurnTimer < 0f)
+                {
+                    // Need check if only one player rest -> Change state to GameOver
+                    // state = State.GameOver;
+                    // OnStateChanged?.Invoke(this, EventArgs.Empty);
+
+                    state = State.PlayerPlayTurn;
+                    OnStateChanged?.Invoke(this, EventArgs.Empty);
+
+                    playerPlayTurnTimer = playerPlayTurnTimerMax;
+                }
+
+                break;
+            case State.GameOver:
+                break;
+        }
     }
 
     public int GetNumberOfPlayers()
@@ -24,5 +86,35 @@ public class GameManager : MonoBehaviour
         players.Add(OtherPlayer.Instance);
         
         return players;
+    }
+
+    public bool IsDealingTheCards()
+    {
+        return state == State.DealingTheCards;
+    }
+
+    public bool IsPlayerPlayTurn()
+    {
+        return state == State.PlayerPlayTurn;
+    }
+
+    public bool IsPlayerEndTurn()
+    {
+        return state == State.PlayerEndTurn;
+    }
+
+    public float GetPlayerPlayTurnTimerNormalized()
+    {
+        return 1 - (playerPlayTurnTimer / playerPlayTurnTimerMax);
+    }
+
+    public float GetPlayerEndTurnTimerNormalized()
+    {
+        return 1 - (playerEndTurnTimer / playerEndTurnTimerMax);
+    }
+
+    public bool IsGameOver()
+    {
+        return state == State.GameOver;
     }
 }

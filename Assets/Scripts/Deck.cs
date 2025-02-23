@@ -23,7 +23,12 @@ public class Deck : MonoBehaviour, ICardObjectParent
         Instance = this;
     }
 
-    private void Start()
+    private void Update()
+    {
+        countCard.text = cardsInDeck.Count.ToString();
+    }
+
+    public void InitDeck()
     {
         // Step 1: Add cards to Deck (except Defuse and Exploding Kitten)
         AddCardsWithoutDefuseOrExplodingKitten();
@@ -39,11 +44,6 @@ public class Deck : MonoBehaviour, ICardObjectParent
 
         // Step 5: Shuffle the Deck again
         ShuffleDeck();
-    }
-
-    private void Update()
-    {
-        countCard.text = cardsInDeck.Count.ToString();
     }
 
     public void ShuffleDeck()
