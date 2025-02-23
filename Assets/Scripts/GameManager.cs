@@ -105,12 +105,12 @@ public class GameManager : MonoBehaviour
 
     public float GetPlayerPlayTurnTimerNormalized()
     {
-        return 1 - (playerPlayTurnTimer / playerPlayTurnTimerMax);
+        return playerPlayTurnTimer / playerPlayTurnTimerMax;
     }
 
     public float GetPlayerEndTurnTimerNormalized()
     {
-        return 1 - (playerEndTurnTimer / playerEndTurnTimerMax);
+        return playerEndTurnTimer / playerEndTurnTimerMax;
     }
 
     public bool IsGameOver()
