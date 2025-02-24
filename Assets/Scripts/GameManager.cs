@@ -30,8 +30,15 @@ public class GameManager : MonoBehaviour
         state = State.DealingTheCards;
     }
 
+    private void Start()
+    {
+        Player.Instance.OnDrawCard += Player_OnDrawCard;
+        DrawnCardUI.Instance.OnPlayerEndTurn += DrawnCardUI_OnPlayerEndTurn;
+    }
+
     private void Update()
     {
+        Debug.Log("Game state: " + state);
         switch (state)
         {
             case State.DealingTheCards:
@@ -71,6 +78,22 @@ public class GameManager : MonoBehaviour
             case State.GameOver:
                 break;
         }
+    }
+
+    private void Player_OnDrawCard(object sender, EventArgs e)
+    {
+        state = State.PlayerEndTurn;
+        OnStateChanged?.Invoke(this, EventArgs.Empty);
+
+        playerEndTurnTimer = playerEndTurnTimerMax;
+    }
+
+    private void DrawnCardUI_OnPlayerEndTurn(object sender, EventArgs e)
+    {
+        state = State.PlayerPlayTurn;
+        OnStateChanged?.Invoke(this, EventArgs.Empty);
+
+        playerPlayTurnTimer = playerPlayTurnTimerMax;
     }
 
     public int GetNumberOfPlayers()

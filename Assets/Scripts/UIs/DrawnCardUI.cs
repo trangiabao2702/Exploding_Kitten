@@ -1,12 +1,16 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEngine.CullingGroup;
 
 public class DrawnCardUI : MonoBehaviour
 {
     public static DrawnCardUI Instance { get; private set; }
+
+    public event EventHandler OnPlayerEndTurn;
 
     [SerializeField] private Image cardImage;
     [SerializeField] private TextMeshProUGUI cardTypeText;
@@ -31,8 +35,6 @@ public class DrawnCardUI : MonoBehaviour
         {
             DefuseTheExplodingKitten();
 
-            Hide();
-
             PutExplodingKittenBackToDeckUI.Instance.Show();
         });
         explodeButton.onClick.AddListener(() =>
@@ -42,6 +44,7 @@ public class DrawnCardUI : MonoBehaviour
         });
 
         GameManager.Instance.OnStateChanged += GameManager_OnStateChanged;
+        PutExplodingKittenBackToDeckUI.Instance.OnPutExplodingKittenIntoDeck += PutEKBackToDeckUI_OnPutExplodingKittenIntoDeck;
     }
 
     private void Start()
@@ -59,9 +62,20 @@ public class DrawnCardUI : MonoBehaviour
         Hide();
     }
 
+    private void PutEKBackToDeckUI_OnPutExplodingKittenIntoDeck(object sender, EventArgs e)
+    {
+        Hide();
+    }
+
     private void Hide()
     {
         gameObject.SetActive(false);
+
+        if (!GameManager.Instance.IsPlayerEndTurn())
+        {
+            return;
+        }
+        OnPlayerEndTurn?.Invoke(this, EventArgs.Empty);
     }
 
     public void Show(CardObject cardObject)

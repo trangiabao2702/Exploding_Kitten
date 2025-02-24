@@ -5,10 +5,13 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEngine.CullingGroup;
 
 public class Player : MonoBehaviour, ICardObjectParent
 {
     public static Player Instance { get; private set; }
+
+    public event EventHandler OnDrawCard;
 
     [SerializeField] private Transform cardsOnHandTransform;
     [SerializeField] private Button drawButton;
@@ -24,7 +27,8 @@ public class Player : MonoBehaviour, ICardObjectParent
 
         drawButton.onClick.AddListener(() =>
         {
-            DrawCardFromDeck();
+            //DrawCardFromDeck();
+            OnDrawCard?.Invoke(this, EventArgs.Empty);
         });
         playButton.onClick.AddListener(() =>
         {

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -7,6 +8,8 @@ using UnityEngine.UI;
 public class PutExplodingKittenBackToDeckUI : MonoBehaviour
 {
     public static PutExplodingKittenBackToDeckUI Instance { get; private set; }
+
+    public event EventHandler OnPutExplodingKittenIntoDeck;
 
     [SerializeField] private TMP_InputField positionInputField;
     [SerializeField] private Button topButton;
@@ -29,6 +32,7 @@ public class PutExplodingKittenBackToDeckUI : MonoBehaviour
         {
             int position = int.Parse(positionInputField.text);
             Deck.Instance.PutExplodingKittenIntoDeck(position);
+            OnPutExplodingKittenIntoDeck?.Invoke(this, EventArgs.Empty);
 
             Hide();
         });
