@@ -40,10 +40,22 @@ public class DrawnCardUI : MonoBehaviour
             Hide();
             Debug.Log("Game over!");
         });
+
+        GameManager.Instance.OnStateChanged += GameManager_OnStateChanged;
     }
 
     private void Start()
     {
+        Hide();
+    }
+
+    private void GameManager_OnStateChanged(object sender, System.EventArgs e)
+    {
+        if (!GameManager.Instance.IsPlayerPlayTurn())
+        {
+            return;
+        }
+
         Hide();
     }
 

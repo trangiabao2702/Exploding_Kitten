@@ -24,18 +24,7 @@ public class Player : MonoBehaviour, ICardObjectParent
 
         drawButton.onClick.AddListener(() =>
         {
-            // Reset all selected cards
-            foreach (CardObject cardObject in cardsOnHand)
-            {
-                cardObject.SetCardSelected(false);
-            }
-
-            // Add new card to hand
-            CardObject newCardObject = Deck.Instance.DrawCard();
-
-            DrawnCardUI.Instance.Show(newCardObject);
-
-            newCardObject.SetCardObjectParent(this);
+            DrawCardFromDeck();
         });
         playButton.onClick.AddListener(() =>
         {
@@ -54,6 +43,8 @@ public class Player : MonoBehaviour, ICardObjectParent
         {
             
         });
+
+        GameManager.Instance.OnStateChanged += GameManager_OnStateChanged;
     }
 
     private void Update()
@@ -79,6 +70,32 @@ public class Player : MonoBehaviour, ICardObjectParent
     public void RemoveCardObject(CardObject cardObject)
     {
         cardsOnHand.Remove(cardObject);
+    }
+
+    private void GameManager_OnStateChanged(object sender, EventArgs e)
+    {
+        if (!GameManager.Instance.IsPlayerEndTurn())
+        {
+            return;
+        }
+
+        DrawCardFromDeck();
+    }
+
+    private void DrawCardFromDeck()
+    {
+        // Reset all selected cards
+        foreach (CardObject cardObject in cardsOnHand)
+        {
+            cardObject.SetCardSelected(false);
+        }
+
+        // Add new card to hand
+        CardObject newCardObject = Deck.Instance.DrawCard();
+
+        DrawnCardUI.Instance.Show(newCardObject);
+
+        newCardObject.SetCardObjectParent(this);
     }
 
     public bool HasCardOnHand(CardObject cardObject)
