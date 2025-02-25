@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEngine.CullingGroup;
 
 public class DrawnCardUI : MonoBehaviour
 {
     public static DrawnCardUI Instance { get; private set; }
 
     public event EventHandler OnPlayerEndTurn;
+    public event EventHandler OnPlayerExplode;
 
     [SerializeField] private Image cardImage;
     [SerializeField] private TextMeshProUGUI cardTypeText;
@@ -36,11 +36,15 @@ public class DrawnCardUI : MonoBehaviour
             DefuseTheExplodingKitten();
 
             PutExplodingKittenBackToDeckUI.Instance.Show();
+
+            ResetCardObjectVariables();
         });
         explodeButton.onClick.AddListener(() =>
         {
+            ResetCardObjectVariables();
+
             Hide();
-            Debug.Log("Game over!");
+            OnPlayerExplode?.Invoke(this, EventArgs.Empty);
         });
 
         GameManager.Instance.OnStateChanged += GameManager_OnStateChanged;
@@ -57,6 +61,24 @@ public class DrawnCardUI : MonoBehaviour
         if (!GameManager.Instance.IsPlayerPlayTurn())
         {
             return;
+        }
+
+        // The drawn card is Exploding Kitten but Player not choose Defuse or Explode
+        if (explodingKittenCardObject != null)
+        {
+            if (defuseCardObject != null)
+            {
+                // Player has Defuse
+                DefuseTheExplodingKitten();
+                Deck.Instance.PutExplodingKittenIntoDeck();
+
+                ResetCardObjectVariables();
+            }
+            else
+            {
+                // Player does not have Defuse
+                OnPlayerExplode?.Invoke(this, EventArgs.Empty);
+            }
         }
 
         Hide();
@@ -110,6 +132,8 @@ public class DrawnCardUI : MonoBehaviour
             defuseButton.gameObject.SetActive(false);
             explodeButton.gameObject.SetActive(false);
             closeButton.gameObject.SetActive(true);
+
+            ResetCardObjectVariables();
         }
     }
 
@@ -147,5 +171,11 @@ public class DrawnCardUI : MonoBehaviour
 
         Player.Instance.RemoveCardObject(explodingKittenCardObject);
         explodingKittenCardObject.SetCardObjectParent(Deck.Instance);
+    }
+
+    private void ResetCardObjectVariables()
+    {
+        defuseCardObject = null;
+        explodingKittenCardObject = null;
     }
 }

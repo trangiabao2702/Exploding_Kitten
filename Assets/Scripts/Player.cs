@@ -27,7 +27,6 @@ public class Player : MonoBehaviour, ICardObjectParent
 
         drawButton.onClick.AddListener(() =>
         {
-            //DrawCardFromDeck();
             OnDrawCard?.Invoke(this, EventArgs.Empty);
         });
         playButton.onClick.AddListener(() =>
@@ -49,6 +48,7 @@ public class Player : MonoBehaviour, ICardObjectParent
         });
 
         GameManager.Instance.OnStateChanged += GameManager_OnStateChanged;
+        DrawnCardUI.Instance.OnPlayerExplode += DrawnCardUI_OnPlayerExplode;
     }
 
     private void Update()
@@ -84,6 +84,11 @@ public class Player : MonoBehaviour, ICardObjectParent
         }
 
         DrawCardFromDeck();
+    }
+
+    private void DrawnCardUI_OnPlayerExplode(object sender, EventArgs e)
+    {
+        Debug.Log("Player explode!");
     }
 
     private void DrawCardFromDeck()

@@ -44,6 +44,9 @@ public class Deck : MonoBehaviour, ICardObjectParent
 
         // Step 5: Shuffle the Deck again
         ShuffleDeck();
+
+        // DEBUG ONLY
+        AddCardObject(GetDefuseOrExplodingKittenCardObject(explodingKittenCardsList));
     }
 
     public void ShuffleDeck()
@@ -177,7 +180,7 @@ public class Deck : MonoBehaviour, ICardObjectParent
         return cardObject;
     }
 
-    public void PutExplodingKittenIntoDeck(int position)
+    public void PutExplodingKittenIntoDeck(int position = 1)
     {
         CardObject explodingKittenCardObject = cardsInDeck[0];
 

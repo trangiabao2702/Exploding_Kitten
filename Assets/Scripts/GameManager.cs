@@ -38,7 +38,6 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log("Game state: " + state);
         switch (state)
         {
             case State.DealingTheCards:
