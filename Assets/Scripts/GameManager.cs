@@ -14,14 +14,17 @@ public class GameManager : MonoBehaviour
         DealingTheCards,
         PlayerPlayTurn,
         PlayerEndTurn,
+        PlayerUseCard,
         GameOver,
     }
 
     private const float playerPlayTurnTimerMax = 45f;
     private const float playerEndTurnTimerMax = 15f;
+    private const float playerUseCardTimerMax = 15f;
     private State state;
     private float playerPlayTurnTimer;
     private float playerEndTurnTimer;
+    private float playerUseCardTimer;
 
     private void Awake()
     {
@@ -34,6 +37,8 @@ public class GameManager : MonoBehaviour
     {
         Player.Instance.OnDrawCard += Player_OnDrawCard;
         DrawnCardUI.Instance.OnPlayerEndTurn += DrawnCardUI_OnPlayerEndTurn;
+        CardsListUI.Instance.OnShowUI += CardsListUI_OnUseCard;
+        CardsListUI.Instance.OnHideUI += CardsListUI_OnHideUI;
     }
 
     private void Update()
@@ -74,6 +79,15 @@ public class GameManager : MonoBehaviour
                 }
 
                 break;
+            case State.PlayerUseCard:
+                playerUseCardTimer -= Time.deltaTime;
+                if (playerUseCardTimer < 0f)
+                {
+                    state = State.PlayerPlayTurn;
+                    OnStateChanged?.Invoke(this, EventArgs.Empty);
+                }
+
+                break;
             case State.GameOver:
                 break;
         }
@@ -93,6 +107,25 @@ public class GameManager : MonoBehaviour
         OnStateChanged?.Invoke(this, EventArgs.Empty);
 
         playerPlayTurnTimer = playerPlayTurnTimerMax;
+    }
+
+    private void CardsListUI_OnUseCard(object sender, EventArgs e)
+    {
+        state = State.PlayerUseCard;
+        OnStateChanged?.Invoke(this, EventArgs.Empty);
+
+        playerUseCardTimer = playerUseCardTimerMax;
+    }
+
+    private void CardsListUI_OnHideUI(object sender, EventArgs e)
+    {
+        if (state != State.PlayerUseCard)
+        {
+            return;
+        }
+
+        state = State.PlayerPlayTurn;
+        OnStateChanged?.Invoke(this, EventArgs.Empty);
     }
 
     public int GetNumberOfPlayers()
@@ -125,6 +158,16 @@ public class GameManager : MonoBehaviour
         return state == State.PlayerEndTurn;
     }
 
+    public bool IsPlayerUseCard()
+    {
+        return state == State.PlayerUseCard;
+    }
+
+    public bool IsGameOver()
+    {
+        return state == State.GameOver;
+    }
+
     public float GetPlayerPlayTurnTimerNormalized()
     {
         return playerPlayTurnTimer / playerPlayTurnTimerMax;
@@ -135,8 +178,8 @@ public class GameManager : MonoBehaviour
         return playerEndTurnTimer / playerEndTurnTimerMax;
     }
 
-    public bool IsGameOver()
+    public float GetPlayerUseCardTimerNormalized()
     {
-        return state == State.GameOver;
+        return playerUseCardTimer / playerUseCardTimerMax;
     }
 }

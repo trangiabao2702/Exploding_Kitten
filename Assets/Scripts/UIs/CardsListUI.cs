@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,9 @@ using UnityEngine.UI;
 public class CardsListUI : MonoBehaviour
 {
     public static CardsListUI Instance { get; private set; }
+
+    public event EventHandler OnShowUI;
+    public event EventHandler OnHideUI;
 
     [SerializeField] private Transform playedCardsTransform;
     [SerializeField] private Button closeButton;
@@ -58,6 +62,8 @@ public class CardsListUI : MonoBehaviour
         {
             Destroy(playedCard.gameObject);
         }
+
+        OnHideUI?.Invoke(this, EventArgs.Empty);
     }
 
     public void Show(List<CardObject> playedCards)
@@ -72,6 +78,8 @@ public class CardsListUI : MonoBehaviour
             Transform cardObjectTransform = Instantiate(playedCard.GetCardObjectSO().prefab);
             cardObjectTransform.transform.SetParent(playedCardsTransform);
         }
+
+        OnShowUI?.Invoke(this, EventArgs.Empty);
     }
 
     public int UnlockSelectCard(int count = 1)
