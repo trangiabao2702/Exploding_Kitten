@@ -36,11 +36,21 @@ public class PutExplodingKittenBackToDeckUI : MonoBehaviour
 
             Hide();
         });
+
+        GameManager.Instance.OnStateChanged += GameManager_OnStateChanged;
     }
 
     private void Start()
     {
         Hide();
+    }
+
+    private void GameManager_OnStateChanged(object sender, EventArgs e)
+    {
+        if (GameManager.Instance.IsPlayerPlayTurn())
+        {
+            Hide();
+        }
     }
 
     public void Hide()
