@@ -17,6 +17,7 @@ public class Player : MonoBehaviour, ICardObjectParent
     [SerializeField] private Button playButton;
     [SerializeField] private Button arrangeButton;
     [SerializeField] private Button nopeButton;
+    [SerializeField] private Button helpButton;
 
     private List<CardObject> cardsOnHand = new List<CardObject>();
 
@@ -44,6 +45,10 @@ public class Player : MonoBehaviour, ICardObjectParent
         nopeButton.onClick.AddListener(() =>
         {
             
+        });
+        helpButton.onClick.AddListener(() =>
+        {
+            TutorialUI.Instance.Show();
         });
 
         GameManager.Instance.OnStateChanged += GameManager_OnStateChanged;
