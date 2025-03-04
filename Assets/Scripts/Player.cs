@@ -13,51 +13,18 @@ public class Player : MonoBehaviour, ICardObjectParent
     public event EventHandler OnDrawCard;
 
     [SerializeField] private Transform cardsOnHandTransform;
-    [SerializeField] private Button drawButton;
-    [SerializeField] private Button playButton;
-    [SerializeField] private Button arrangeButton;
-    [SerializeField] private Button nopeButton;
-    [SerializeField] private Button helpButton;
 
     private List<CardObject> cardsOnHand = new List<CardObject>();
 
     private void Awake()
     {
         Instance = this;
-
-        drawButton.onClick.AddListener(() =>
-        {
-            OnDrawCard?.Invoke(this, EventArgs.Empty);
-        });
-        playButton.onClick.AddListener(() =>
-        {
-            List<CardObject> selectedCards = GetSelectedCards();
-
-            if (CanPlayCards(selectedCards))
-            {
-                PlayCards(selectedCards);
-            }
-        });
-        arrangeButton.onClick.AddListener(() =>
-        {
-            ArrangeCardsOnHand();
-        });
-        nopeButton.onClick.AddListener(() =>
-        {
-            
-        });
-        helpButton.onClick.AddListener(() =>
-        {
-            TutorialUI.Instance.Show();
-        });
-
-        GameManager.Instance.OnStateChanged += GameManager_OnStateChanged;
-        DrawnCardUI.Instance.OnPlayerExplode += DrawnCardUI_OnPlayerExplode;
     }
 
-    private void Update()
+    private void Start()
     {
-        nopeButton.interactable = HasNopeCard();
+        GameManager.Instance.OnStateChanged += GameManager_OnStateChanged;
+        DrawnCardUI.Instance.OnPlayerExplode += DrawnCardUI_OnPlayerExplode;
     }
 
     public Transform GetCardObjectFollowTransform()
@@ -111,6 +78,11 @@ public class Player : MonoBehaviour, ICardObjectParent
         newCardObject.SetCardObjectParent(this);
     }
 
+    public void TriggerDrawCard()
+    {
+        OnDrawCard?.Invoke(this, EventArgs.Empty);
+    }
+
     public bool HasCardOnHand(CardObject cardObject)
     {
         return cardsOnHand.Contains(cardObject);
@@ -146,48 +118,19 @@ public class Player : MonoBehaviour, ICardObjectParent
                 return true;
             case 2:
                 // Play 2 same type cards
-                if (CanPlayTwoCards(selectedCards[0], selectedCards[1]))
-                {
-                    return true;
-                }
-                return false;
+                return CanPlayTwoCards(selectedCards[0], selectedCards[1]);
             case 3:
                 // Play 3 same type cards
-                if (CanPlayThreeCards(selectedCards[0], selectedCards[1], selectedCards[2]))
-                {
-                    return true;
-                }
-                return false;
+                return CanPlayThreeCards(selectedCards[0], selectedCards[1], selectedCards[2]);
             case 5:
                 // Play 5 different type cards
-                if (PlayedDeck.Instance.GetCardObjectList().Count == 0)
-                {
-                    return false;
-                }
-
-                for (int i = 0; i < selectedCards.Count - 1; i++)
-                {
-                    for (int j = i + 1; j < selectedCards.Count; j++)
-                    {
-                        if (selectedCards[i].GetCardType() == selectedCards[j].GetCardType())
-                        {
-                            // 2 cards are Cat type but different cards
-                            if (selectedCards[i].GetCardObjectSO().cardName != selectedCards[j].GetCardObjectSO().cardName)
-                            {
-                                continue;
-                            }
-
-                            return false;
-                        }
-                    }
-                }
-                return true;
+                return CanPlayFiveCards(selectedCards);
             default:
                 return false;
         }
     }
 
-    public bool CanPlayTwoCards(CardObject firstCardObject, CardObject secondCardObject)
+    private bool CanPlayTwoCards(CardObject firstCardObject, CardObject secondCardObject)
     {
         if (firstCardObject.GetCardType() != secondCardObject.GetCardType())
         {
@@ -205,10 +148,29 @@ public class Player : MonoBehaviour, ICardObjectParent
         return true;
     }
 
-    public bool CanPlayThreeCards(CardObject firstCardObject, CardObject secondCardObject, CardObject thirdCardObject)
+    private bool CanPlayThreeCards(CardObject firstCardObject, CardObject secondCardObject, CardObject thirdCardObject)
     {
         return CanPlayTwoCards(firstCardObject, secondCardObject) && CanPlayTwoCards(firstCardObject, thirdCardObject);
     }
+
+    private bool CanPlayFiveCards(List<CardObject> selectedCards)
+    {
+        if (PlayedDeck.Instance.GetCardObjectList().Count == 0)
+        {
+            return false;
+        }
+
+        HashSet<string> cardTypes = new HashSet<string>();
+        foreach (var card in selectedCards)
+        {
+            if (!cardTypes.Add(card.GetCardObjectSO().cardName))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
 
     public void PlayCards(List<CardObject> selectedCards)
     {
@@ -243,20 +205,6 @@ public class Player : MonoBehaviour, ICardObjectParent
         }
     }
 
-    private void ArrangeCardsOnHand()
-    {
-        for (int i = 0; i < cardsOnHandTransform.childCount - 1; i++)
-        {
-            for (int j = i + 1; j < cardsOnHandTransform.childCount; j++)
-            {
-                if (String.Compare(cardsOnHandTransform.GetChild(i).name, cardsOnHandTransform.GetChild(j).name) > 0)
-                {
-                    cardsOnHandTransform.GetChild(j).SetSiblingIndex(cardsOnHandTransform.GetChild(i).GetSiblingIndex());
-                }
-            }
-        }
-    }
-
     public CardObject GetDefuseCardOnHand()
     {
         foreach (CardObject cardObject in cardsOnHand)
@@ -268,17 +216,5 @@ public class Player : MonoBehaviour, ICardObjectParent
         }
 
         return null;
-    }
-
-    private bool HasNopeCard()
-    {
-        foreach (CardObject cardObject in cardsOnHand)
-        {
-            if (cardObject.GetCardType() == CardObject.CardType.Nope)
-            {
-                return true;
-            }
-        }
-        return false;
     }
 }
